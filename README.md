@@ -1,5 +1,7 @@
 # Zeitabhängiges Routing – die Uhrzeit ändert die Route – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-time-dependent-demo.streamlit.app/)**
+
 Neuntes Stück der Kürzeste-Wege-Linie der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning", Ast von [Dijkstra](../dijkstra-demo):
 anders als die Fall-Demos im Portfolio (ein Anwendungsfall, mehrere Verfahren im Vergleich) zeigt diese Demo **ein** Verfahren – das **zeitabhängige Dijkstra** samt Profilsuche – an einem wachsenden Beispiel.
 Ein Navigationsgerät rechnet mit festen Fahrzeiten. Im echten Verkehr hängt die Fahrzeit einer Straße von der **Uhrzeit** ab: die schnelle Hauptachse ist um 8 Uhr verstopft, die Landstraße nicht. Beim zeitabhängigen Dijkstra ist das Label eines Knotens seine **Ankunftszeit**,
