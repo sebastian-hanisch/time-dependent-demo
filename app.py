@@ -25,6 +25,7 @@ from td_presets import (
     init_session_state_defaults,
     load_permalink_settings,
     randomize_seed,
+    seed_widget,
     sync_query_params,
 )
 from td_scenario import make_network
@@ -117,8 +118,10 @@ with st.sidebar:
     depart = st.select_slider("Abfahrtszeit", C.DEPART_OPTIONS, key="depart_slider", format_func=C.hhmm,
                               help="Wann man am Start losfährt (Schritte von 15 Minuten). Die Karte, die Routen und alle Kennzahlen gelten für diese Uhrzeit; das Diagramm zeigt den ganzen Tag.")
     if net_key == "city":
+        seed_widget("side_slider")
         side = st.slider("Kreuzungen je Seite", *bounds("side_slider"), key="side_slider", help="Größe des Rasters: n = Seite² Knoten. Die Routen wechseln im Lauf des Tages, wenn Start und Ziel weit auseinander liegen.")
         st.session_state[KEPT["side_slider"]] = side
+        seed_widget("sites_slider")
         sites = st.slider("Baustellen", *bounds("sites_slider"), key="sites_slider",
                           help="So viele Nebenstraßen bekommen eine Baustelle, die um 8:30 endet (45 Minuten Zuschlag davor): dort wird die FIFO-Eigenschaft verletzt. Bei 10 / 20 / 40 Baustellen im 8 × 8-Netz lohnt sich Warten in 1 % / 3 % / 12 % der Abfragen.")
         st.session_state[KEPT["sites_slider"]] = sites
@@ -126,14 +129,17 @@ with st.sidebar:
         side = int(st.session_state.get(KEPT["side_slider"], C.DEFAULT_SIDE))
         sites = int(st.session_state.get(KEPT["sites_slider"], C.DEFAULT_SITES))
     if net_key == "random":
+        seed_widget("nodes_slider")
         nodes = st.slider("Knoten", *bounds("nodes_slider"), key="nodes_slider", step=10, help="Anzahl der Knoten n.")
         st.session_state[KEPT["nodes_slider"]] = nodes
+        seed_widget("degree_slider")
         degree = st.slider("Mittlerer Grad", *bounds("degree_slider"), key="degree_slider", step=0.5, help="Kanten je Knoten.")
         st.session_state[KEPT["degree_slider"]] = degree
     else:
         nodes = int(st.session_state.get(KEPT["nodes_slider"], C.DEFAULT_NODES))
         degree = float(st.session_state.get(KEPT["degree_slider"], C.DEFAULT_DEGREE))
     if net_key in ("city", "random"):
+        seed_widget("seed_input")
         seed = st.number_input("Zufalls-Seed", *bounds("seed_input"), key="seed_input", step=1)
         st.session_state[KEPT["seed_input"]] = seed
         st.button("🎲 Neues Netz generieren", width="stretch", on_click=randomize_seed, help="Würfelt einen neuen Zufalls-Seed für das Netz.")
